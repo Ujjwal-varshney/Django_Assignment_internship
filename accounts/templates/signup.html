@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .form-group .info-message {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #d9534f;
+        }
+        .form-group .info {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #6c757d;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .links a {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            transition: text-decoration 0.3s;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Username:</label>
+                <input type="text" name="username" maxlength="150" required id="id_username">
+                <span class="info">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+                {% for error in form.username.errors %}
+                    <span class="info-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email:</label>
+                <input type="email" name="email" required id="id_email">
+                {% for error in form.email.errors %}
+                    <span class="info-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="id_password1">Password:</label>
+                <input type="password" name="password1" required id="id_password1">
+                <span class="info-message">Your password can’t be too similar to your other personal information.</span>
+                <span class="info-message">Your password must contain at least 8 characters.</span>
+                <span class="info-message">Your password can’t be a commonly used password.</span>
+                <span class="info-message">Your password can’t be entirely numeric.</span>
+                {% for error in form.password1.errors %}
+                    <span class="info-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="id_password2">Password confirmation:</label>
+                <input type="password" name="password2" required id="id_password2">
+                {% for error in form.password2.errors %}
+                    <span class="info-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div class="links">
+            <a href="{% url 'login' %}">Already have an account? Login</a>
+        </div>
+    </div>
+</body>
+</html>
